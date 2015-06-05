@@ -47,7 +47,7 @@
 						<div class="inner">
 							<h2>Can Do IT</h2>
 							<p>당신도 바로 이 곳에서<br />
-							IT 정보를 습득할 수 있습니다<br />
+							IT 정보를 습득할 수 있습니다아아아<br />
 							</p>
 							<ul class="actions">
 								<li><h1><a href="#" class="button special">Log in</a></h1></li>
