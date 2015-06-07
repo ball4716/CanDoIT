@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+<Resource maxIdle="10"
+			maxActive="20"
+			url="jdbc:oracle:thin:@localhost:1521:XE"
+			factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+			driverClassName="oracle.jdbc.driver.OracleDriver"
+			password="159753"
+			username="ball4716"
+			type="javax.sql.DataSource"
+			auth="container"
+			name="jdbc/XE"/>
+</Context>

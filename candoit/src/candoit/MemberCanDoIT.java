@@ -1,12 +1,12 @@
 package candoit;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 import javax.sql.DataSource;
 import javax.naming.Context;
 import javax.naming.InitialContext;
+
+import com.domain.Member;
 
 public class MemberCanDoIT {
 	//싱글턴 패턴으로 생성자 접근지정자를 private로 지정
@@ -21,16 +21,16 @@ public class MemberCanDoIT {
 	}
 	
 	//커넥션풀로부터 커넥션을 할당 받는 메소드
-	private Connection getConnection() throws Exception{
+	private Connection getConnection() throws Exception, SQLException{
 		Context initCtx = new InitialContext();
 		Context envCtx = (Context)initCtx.lookup("java:comp/env");
-		DataSource ds = (DataSource)envCtx.lookup("jdbc/orcl");
+		DataSource ds = (DataSource)envCtx.lookup("jdbc/XE");
 		
 		return ds.getConnection();
 	}
 	
 	//회원가입
-	public void insertMember(Member member)throws Exception{
+	public void insertMember(Member member)throws Exception, SQLException{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql="";
@@ -39,13 +39,14 @@ public class MemberCanDoIT {
 		try{
 			//커넥션 풀로붙처 커넥션 할당
 			conn = getConnection();
-			sql = "insert into MEMBER values(?,?,?,?,?,?,?,?)";
+			System.out.println(" 출력 ");
+			sql = "insert into MEMBER values(?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(++cnt, member.getId());
-			pstmt.setString(++cnt, member.getPasswd());
-			pstmt.setString(++cnt, member.getName());
-			pstmt.setString(++cnt, member.getEmail());
-			pstmt.executeLargeUpdate();
+			pstmt.setString(++cnt, member.getMember_id());
+			pstmt.setString(++cnt, member.getMember_passwd());
+			pstmt.setString(++cnt, member.getMember_name());
+			pstmt.setString(++cnt, member.getMember_email());
+			pstmt.executeUpdate();
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
@@ -65,13 +66,13 @@ public class MemberCanDoIT {
 		
 		try{
 			conn = getConnection();
-			sql = "select passwd from MEMBER where id = ?";
+			sql = "select member_passwd from MEMBER where member_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member_id);
 			rs = pstmt. executeQuery();
 			
 			if(rs.next()){
-				dbpasswd = rs.getString("passwd");
+				dbpasswd = rs.getString("member_passwd");
 				if(dbpasswd.equals(member_passwd))
 					x=1;	//인증 성공
 				else
@@ -102,10 +103,10 @@ public class MemberCanDoIT {
 			
 			if(rs.next()){
 				member = new Member();
-				member.setId(rs.getString("member_id"));
-				member.setPasswd(rs.getString("member_passwd"));
-				member.setName(rs.getString("member_name"));
-				member.setEmail(rs.getString("member_email"));
+				member.setMember_id(rs.getString("member_id"));
+				member.setMember_passwd(rs.getString("member_passwd"));
+				member.setMember_name(rs.getString("member_name"));
+				member.setMember_email(rs.getString("member_email"));
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -125,15 +126,34 @@ public class MemberCanDoIT {
 			conn = getConnection();
 			sql = "update MEMBER set member_passwd=?, member_name=?, member_email=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(++cnt, member.getPasswd());
-			pstmt.setString(++cnt, member.getName());
-			pstmt.setString(++cnt, member.getEmail());
-			pstmt.setString(++cnt, member.getId());
+			pstmt.setString(++cnt, member.getMember_passwd());
+			pstmt.setString(++cnt, member.getMember_name());
+			pstmt.setString(++cnt, member.getMember_email());
+			pstmt.setString(++cnt, member.getMember_id());
 			
-			pstmt.excuteUpdate();
+			pstmt.executeUpdate();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}finally{
+			execClose(null,pstmt,conn);
+		}
+	}
+	
+	//회원탈퇴, 회원정보삭제
+	public void deleteMember(String member_id)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		try {
+			conn = getConnection();
+			sql = "delete from MEMBER where member_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member_id);
+			pstmt.executeUpdate();
+
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		} finally {
 			execClose(null,pstmt,conn);
 		}
 	}
@@ -169,7 +189,7 @@ public class MemberCanDoIT {
 	// ResultSet => PreparedStatement => Connection와 같이 생성순서의 역순으로 close한다
 	public void execClose(ResultSet rs, PreparedStatement pstmt, Connection conn)throws Exception{
 		//자원 정리
-		if(rs != null) try{rs.close();}catch(SQLExeption sqle){}
+		if(rs != null) try{rs.close();}catch(SQLException sqle){}
 		if(pstmt !=null) try{pstmt.close();}catch(SQLException sqle){}
 		//커넥션 풀로 반납
 		if(conn !=null) try{conn.close();}catch(SQLException sqle){}

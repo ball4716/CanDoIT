@@ -50,7 +50,11 @@
 							IT 정보를 습득할 수 있습니다<br />
 							</p>
 							<ul class="actions">
-								<li><h1><a href="#" class="button special">Log in</a></h1></li>
+								<li>
+									<h1>
+										<a href="#" class="button special">Log in</a>
+									</h1>
+								</li>
 							</ul>
 						</div>
 						<a href="#one" class="more scrolly">둘 러 보 기</a>
