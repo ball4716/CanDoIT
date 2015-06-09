@@ -20,7 +20,7 @@
 <html>
 <head>
 <title>회원정보수정</title> 
-<meta http-equiv="Refresh" content="5;url=main.jsp">
+<meta http-equiv="Refresh" content="5;url=../index.jsp">
 </head>
 <body>
 <h3>회원정보 수정</h3>

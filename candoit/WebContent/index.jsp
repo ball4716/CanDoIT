@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!--
-	Spectral by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>CanDoIT</title>
@@ -14,10 +9,13 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie/v8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie/v9.css" /><![endif]-->
-		<!--[if lte IE 8]><script src="assets/css/ie/respond.min.js"></script><![endif]-->
+		<!--[if lte IE 8]><script src="assets/css/ie/respond.min.js"></script><![endif]-->	
+		<!-- link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"-->
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	</head>
 	<body class="landing">
-
 		<!-- Page Wrapper -->
 			<div id="page-wrapper">
 
@@ -34,7 +32,12 @@
 											<li><a href="generic.html">Generic</a></li>
 											<li><a href="elements.html">Elements</a></li>
 											<li><a href="#">Sign Up</a></li>
-											<li><a href="#">Log In</a></li>
+											<% 
+											if(session.getAttribute("member_id")==null){%>
+											<li><a href="view/main.jsp">Log In</a></li>
+											<%}else{%>
+											<li><a onclick="location.href='view/logout.jsp'">Log Out</a></li>
+											<%} %>
 										</ul>
 									</div>
 								</li>
@@ -52,7 +55,12 @@
 							<ul class="actions">
 								<li>
 									<h1>
-										<a href="#" class="button special">Log in</a>
+									<% 
+										if(session.getAttribute("member_id")==null){%>
+										<a href="view/main.jsp" class="button special">Log In</a>
+										<%}else{%>
+										<a onclick="location.href='view/logout.jsp'" class="button special">Log Out</a>
+										<%} %>
 									</h1>
 								</li>
 							</ul>
@@ -64,7 +72,7 @@
 					<section id="one" class="wrapper style1 special">
 						<div class="inner">
 							<header class="major">
-								<h2>IT의 시대가 도래하여 지금 세상엔 엄청나게 많은<br />
+								<h2>IT의 시대가 도래하여 지금 세상은 엄청나게 많은<br />
 								정보들로 넘쳐납니다</h2>
 								<p>곳곳에 퍼져 있는 이 많은 정보들을 어떻게 하면 한눈에 모아 볼 수 있을까요?<br />
 								비밀은 바로 다음에 있습니다.</p>

@@ -18,5 +18,5 @@
 
 <script>
 alert("축하");
-location.href="main.jsp";
+location.href="../index.jsp";
 </script>

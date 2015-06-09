@@ -12,7 +12,7 @@
 	if(check==1){
 		//로그인 성공
 		session.setAttribute("member_id",member_id);
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("../index.jsp");
 	}else if(check==0){
 %>
 	<script> 

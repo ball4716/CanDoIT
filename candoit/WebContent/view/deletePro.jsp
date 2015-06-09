@@ -2,7 +2,7 @@
 <%@ page import = "candoit.MemberCanDoIT" %>
 <% 
    if(session.getAttribute("member_id") == null){
-	   response.sendRedirect("index.jsp");
+	   response.sendRedirect("../index.jsp");
    }else{
 %>
 <% 

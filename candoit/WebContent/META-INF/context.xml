@@ -9,5 +9,5 @@
 			username="ball4716"
 			type="javax.sql.DataSource"
 			auth="container"
-			name="jdbc/XE"/>
+			name="jdbc/ball4716"/>
 </Context>
