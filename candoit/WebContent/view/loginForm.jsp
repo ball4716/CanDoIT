@@ -14,7 +14,7 @@
 <body>
 <h3>Log in</h3>
 <form action="loginPro.jsp" method="post">
-<div class="12u$" style=margin:auto>
+<div class="12u$" style="margin:'auto' margin-left:'30%'">
 	<input type="text" name="member_id" id="member_id" placeholder="ID"><br/>
 	<input type="password" name="member_passwd" name="member_passwd" placeholder="PASSWORD"><br/>
 </div>
